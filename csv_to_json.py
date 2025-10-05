@@ -13,19 +13,31 @@ def main():
             for row in csv_reader:
                 data.append(row)
     except FileNotFoundError:
-        exit(f"❌ Error: The file '{csv_file}' was not found.")
+        print(f"❌ Error: The file '{csv_file}' was not found.")
+        exit_program()
+
     except Exception as e:
-        exit(f"❌ Error reading CSV file: {e}")
+        print(f"❌ Error reading CSV file: {e}")
+        exit_program()
 
     if not data:
-        exit("No data in the CSV file, no JSON file created")
+        print("No data in the CSV file, no JSON file created")
+        exit_program()
 
     try:
         with open(json_file, 'w', encoding="utf-8") as file:
             file.write(json.dumps(data, indent=4))
             print(f"✅ Successfully converted {csv_file} to {json_file}")
     except Exception as e:
-        exit(f"❌ Error writing JSON file: {e}")
+        print(f"❌ Error writing JSON file: {e}")
+        exit_program()
+
+    exit_program()
+
+
+def exit_program():
+    input("Press ENTER to exit. ")
+    exit()
 
 
 if __name__ == '__main__':
